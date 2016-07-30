@@ -2,13 +2,14 @@
 #include "stringlistmodel.h"
 #include <QListView>
 #include <QTableView>
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
     QStringList list;
-    list << "a" << "b" << "c";
+    list << "a" << "b" << "c"<< "abcd";
     StringListModel model(list);
 
     QListView listView;

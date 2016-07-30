@@ -2,6 +2,7 @@
 #include <QFileSystemModel>
 #include <QTreeView>
 #include <QListView>
+#include<QDebug>
 
 int main(int argc, char *argv[])
 {
@@ -11,12 +12,13 @@ int main(int argc, char *argv[])
     // 指定要监视的目录
     model.setRootPath(QDir::currentPath());
 
+
     // 创建树型视图
     QTreeView tree;
     // 为视图指定模型
     tree.setModel(&model);
     // 指定根索引
-    tree.setRootIndex(model.index(QDir::currentPath()));
+    tree.setRootIndex(model.index(QDir::currentPath() ));
 
     // 创建列表视图
     QListView list;
