@@ -4,11 +4,11 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    // 在代码中可以使用中文字符串
+    /*  在代码中可以使用中文字符串 */
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
     // 新建QWidget类对象，默认parent参数是0，所以它是个窗口
-   // QWidget *widget = new QWidget();
+    // QWidget *widget = new QWidget();
     //QWidget *widget = new QWidget(0,Qt::Dialog);
     QWidget *widget = new QWidget(0,Qt::Dialog|Qt::FramelessWindowHint);
     widget->setWindowTitle(QObject::tr("我是widget"));
