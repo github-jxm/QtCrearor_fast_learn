@@ -23,9 +23,11 @@ MainWindow::~MainWindow()
 // 启动进程按钮
 void MainWindow::on_pushButton_clicked()
 {
-    QString program = "cmd.exe";
+//    QString program = "cmd.exe";
+    QString program = "pkexec";
     QStringList arguments;
-    arguments << "/c dir&pause";
+//    arguments << "/c dir&pause";
+    arguments << "ls" << "/root/";
     myProcess.start(program, arguments);
 }
 

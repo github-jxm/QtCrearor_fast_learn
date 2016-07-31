@@ -49,6 +49,7 @@ void Dialog::loadFromFile()
     const char *from = buffer.data().data();
     memcpy(to, from, qMin(sharedMemory.size(), size));
     sharedMemory.unlock();
+    qDebug("-------");
 }
 
 void Dialog::loadFromMemory()

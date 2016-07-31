@@ -48,8 +48,8 @@ void Consumer::run()
 int main(int argc, char *argv[])
 {
     QCoreApplication app(argc, argv);
-    Producer producer;
-    Consumer consumer;
+    Producer producer;  // 生产者
+    Consumer consumer; // 消费者
     producer.start();
     consumer.start();
     producer.wait();

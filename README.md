@@ -36,5 +36,20 @@
 
 ## 19. 进程和线程
 
+* 19-1 启动一个进程, QProcess
+
+* 19-2 共享内存 
+```
+ ipcs -m       查看共享内存
+ ipcrm shmid   删除共享内存
+```
+> 增加:
+> QLocalServer和QLocalSocket 进程间通信 
+> http://tgstdj.blog.163.com/blog/static/74820040201243072238780/
+
+* 19-3  启动线程 
+
+* 19-4  线程同步
+
 ## 21. WebKit
 

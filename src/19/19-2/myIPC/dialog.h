@@ -26,7 +26,7 @@ private slots:
     void on_loadFromSharedMemoryButton_clicked();
 
 private:
-    void detach();
+    void detach(); // 将共享内存分离
 
 private:
     Ui::Dialog *ui;
