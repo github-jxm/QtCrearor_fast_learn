@@ -43,6 +43,7 @@ void Widget::paintEvent(QPaintEvent *event)
     //绘制一个矩形
     painter.drawRect(-50, -50, 100, 50);
     painter.save();
+
     //将坐标系统进行缩放
     painter.scale(0.5, 0.4);
     painter.setBrush(Qt::yellow);
@@ -53,7 +54,7 @@ void Widget::paintEvent(QPaintEvent *event)
     painter.setPen(Qt::blue);
     painter.setBrush(Qt::darkYellow);
     //绘制一个椭圆
-    painter.drawEllipse(QRect(60, -100, 50, 50));
+    painter.drawEllipse(QRect(60, -100, 60, 40));
     //将坐标系统进行扭曲
     painter.shear(1.5, -0.7);
     painter.setBrush(Qt::darkGray);

@@ -10,7 +10,7 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
-    setMouseTracking(true);
+    setMouseTracking(true);  //鼠标移动事件生效
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
@@ -34,7 +34,7 @@ void Widget::paintEvent(QPaintEvent *event)
     QTransform transform;
     transform.translate(width()/2, height()/2);
     transform.scale(side/300.0, side/300.0);
-    transform.rotate(angle);
+    transform.rotate(angle);  // 坐标系统 旋转
     painter.setWorldTransform(transform);
     painter.drawEllipse(-120, -120, 240, 240);
     painter.drawLine(0, 0, 100, 0);

@@ -20,6 +20,15 @@
 
 ## 10. 2D 绘图
 
+* 10-1  绘制图形 
+* 10-2  基本绘制和填充  
+* 10-3  窗口视口转换
+* 10-4  简单动画应用
+* 10-5  
+* 10-6
+
+
+
 ## 11. 图形视图.动画和状态机
 
 ## 13. 3D 绘图
@@ -43,9 +52,10 @@
  ipcs -m       查看共享内存
  ipcrm shmid   删除共享内存
 ```
-> 增加:
-> QLocalServer和QLocalSocket 进程间通信 
+> 增加: 
+> QLocalServer和QLocalSocket 进程间通信  
 > http://tgstdj.blog.163.com/blog/static/74820040201243072238780/
+
 
 * 19-3  启动线程 
 
