@@ -24,12 +24,9 @@ int main(int argc, char* argv[ ])
     s12->assignProperty(&button, "geometry", QRect(300, 100, 100, 50));
     s13->assignProperty(&button, "geometry", QRect(200, 200, 100, 50));
 
-    QSignalTransition *transition1 = s11->addTransition(&button,
-                                                       SIGNAL(clicked()), s12);
-    QSignalTransition *transition2 = s12->addTransition(&button,
-                                                       SIGNAL(clicked()), s13);
-    QSignalTransition *transition3 = s13->addTransition(&button,
-                                                       SIGNAL(clicked()), s11);
+    QSignalTransition *transition1 = s11->addTransition(&button, SIGNAL(clicked()), s12);
+    QSignalTransition *transition2 = s12->addTransition(&button, SIGNAL(clicked()), s13);
+    QSignalTransition *transition3 = s13->addTransition(&button, SIGNAL(clicked()), s11);
 
     QPropertyAnimation *animation = new QPropertyAnimation(&button, "geometry");
     transition1->addAnimation(animation);
