@@ -1,4 +1,5 @@
 #include "stringlistmodel.h"
+#include <QDebug>
 
 int StringListModel::rowCount(const QModelIndex &parent) const
 {
@@ -13,11 +14,14 @@ QVariant StringListModel::data(const QModelIndex &index, int role) const
     if (index.row() >= stringList.size())
         return QVariant();
 
+
     // 添加Qt::EditRole的判断
-    if (role == Qt::DisplayRole || role == Qt::EditRole)
+    if (role == Qt::DisplayRole || role == Qt::EditRole){
+        //        qDebug() << "=========== " << stringList.at(index.row()) ;
         return stringList.at(index.row());
-    else
+    }else{
         return QVariant();
+    }
 }
 
 QVariant StringListModel::headerData(int section, Qt::Orientation orientation,
@@ -45,6 +49,7 @@ Qt::ItemFlags StringListModel::flags(const QModelIndex &index) const
 bool StringListModel::setData(const QModelIndex &index,
                               const QVariant &value, int role)
 {
+//    qDebug() << "---------------------" << value;
     if (index.isValid() && role == Qt::EditRole) {
 
         stringList.replace(index.row(), value.toString());

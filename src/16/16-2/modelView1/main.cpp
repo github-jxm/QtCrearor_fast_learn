@@ -7,8 +7,9 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    // 创建标准项模型
-    QStandardItemModel model;
+    /* 1.  模型 */
+
+    QStandardItemModel model;// 创建标准项模型
     // 获取模型的根项（Root Item），根项是不可见的
     QStandardItem *parentItem = model.invisibleRootItem();
 
@@ -19,11 +20,11 @@ int main(int argc, char *argv[])
     pixmap0.fill("red");
     item0->setIcon(QIcon(pixmap0));
     item0->setToolTip("indexA");
-    // 将创建的标准项作为根项的子项
+    // 将item0  作为根项的子项
     parentItem->appendRow(item0);
+
     // 将创建的标准项作为新的父项
     parentItem = item0;
-
     // 创建新的标准项，它将作为item0的子项
     QStandardItem *item1 = new QStandardItem;
     item1->setText("B");
@@ -37,9 +38,9 @@ int main(int argc, char *argv[])
     QStandardItem *item2 = new QStandardItem;
     QPixmap pixmap2(50,50);
     pixmap2.fill("green");
-    item2->setData("C", Qt::EditRole);
-    item2->setData("indexC", Qt::ToolTipRole);
-    item2->setData(QIcon(pixmap2), Qt::DecorationRole);
+    item2->setData("C", Qt::EditRole);  // 等同于  setText("C");
+    item2->setData("indexC", Qt::ToolTipRole);  // 等同于  setToolTip("indexB");
+    item2->setData(QIcon(pixmap2), Qt::DecorationRole); //等同于 setIcon(QIcon(pixmap1));
     parentItem->appendRow(item2);
 
     // 在树视图中显示模型

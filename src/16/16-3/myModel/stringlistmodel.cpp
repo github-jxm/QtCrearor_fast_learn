@@ -1,4 +1,5 @@
 #include "stringlistmodel.h"
+#include <QDebug>
 
 int StringListModel::rowCount(const QModelIndex &parent) const
 {
@@ -22,6 +23,7 @@ QVariant StringListModel::data(const QModelIndex &index, int role) const
 QVariant StringListModel::headerData(int section, Qt::Orientation orientation,
                                      int role) const
 {
+    //    qDebug() << "role :" << role << endl;
     if (role != Qt::DisplayRole)
         return QVariant();
 
