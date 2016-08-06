@@ -1,0 +1,18 @@
+/* Qt Creator创建的文件 */
+
+import QmlProject 1.0
+
+Project {
+    /* 在当前目录和子目录下包含的qml,js和图片文件 */
+    QmlFiles {
+        directory: "."
+    }
+    JavaScriptFiles {
+        directory: "."
+    }
+    ImageFiles {
+        directory: "."
+    }
+    /* 列出QML运行环境下的插件目录 */
+    // importPaths: [ "../exampleplugin" ]
+}
