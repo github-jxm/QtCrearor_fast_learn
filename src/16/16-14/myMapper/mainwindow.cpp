@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QDataWidgetMapper>
 #include <QStandardItemModel>
+#include <QTableView>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -24,6 +25,11 @@ MainWindow::MainWindow(QWidget *parent) :
     mapper->addMapping(ui->lineEdit_2, 1);
     // 显示模型中的第一行
     mapper->toFirst();
+
+    //----------------------------------------------------------
+   QTableView *tableview  = new QTableView();
+    tableview->setModel(model);
+    tableview->show();
 }
 
 MainWindow::~MainWindow()

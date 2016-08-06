@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    // QListWidget
+    /**********  1.  QListWidget  **********/
     QListWidget listWidget;
     // 一种添加项目的简便方法
     new QListWidgetItem("a", &listWidget);
@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     // 显示列表部件
     listWidget.show();
 
-    // QTreeWidget
+    /***********  2. QTreeWidget **********/
     QTreeWidget treeWidget;
     // 必须设置列数
     treeWidget.setColumnCount(2);
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     grade2->setText(0,"Grade2");
     treeWidget.show();
 
-    // QTableWidget
+    /************ 3.  QTableWidget  **********/
     // 创建表格部件，同时指定行数和列数
     QTableWidget tableWidget(3, 2);
     // 创建表格项目，并插入到指定单元
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
     tableWidget.setHorizontalHeaderItem(0,headerH);
     tableWidget.show();
 
-    // 为listWidget启用拖放
+    /************ 4.  为listWidget启用拖放 *************/
     // 设置选择模式为单选
     listWidget.setSelectionMode(QAbstractItemView::SingleSelection);
     // 启用拖动
