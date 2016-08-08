@@ -19,5 +19,5 @@ TEMPLATE = app
 
 SOURCES += main.cpp
 
-OTHER_FILES += \
-    aaa.py
+#OTHER_FILES += \
+#    aaa.py
