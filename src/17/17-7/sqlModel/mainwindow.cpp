@@ -31,7 +31,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_clicked()
 {
     // 开始事务操作
-    model->database().transaction();
+    model->database().transaction(); // 启动 事物操作
     if (model->submitAll()) {
         model->database().commit(); //提交
     } else {
@@ -52,7 +52,7 @@ void MainWindow::on_pushButton_7_clicked()
 {
     QString name = ui->lineEdit->text();
     //根据姓名进行筛选，一定要使用单引号
-    model->setFilter(QString("name = '%1'").arg(name));
+    model->setFilter(QString("name = '%1'").arg(name));   // filter 过滤器
     model->select();
 }
 

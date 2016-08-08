@@ -17,13 +17,14 @@ static bool createConnection()
     QSqlQuery query;
     // 创建student表
     query.exec(QString("create table student (id int primary key, "
-               "name varchar, course int)"));
+                                       "name varchar, course int)"));
     query.exec(QString("insert into student values(1, '李强', 11)"));
     query.exec(QString("insert into student values(2, '马亮', 11)"));
     query.exec(QString("insert into student values(3, '孙红', 12)"));
+
     // 创建course表
     query.exec(QString("create table course (id int primary key, "
-               "name varchar, teacher varchar)"));
+                                      "name varchar, teacher varchar)"));
     query.exec(QString("insert into course values(10, '数学', '王老师')"));
     query.exec(QString("insert into course values(11, '英语', '张老师')"));
     query.exec(QString("insert into course values(12, '计算机', '白老师')"));

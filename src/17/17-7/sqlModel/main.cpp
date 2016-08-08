@@ -6,10 +6,12 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    // 这行代码要写在创建连接之前
+
+    /* 这行代码要写在创建连接之前, 不然，数据库中文乱码*/
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
-    if (!createConnection()) return 1;
+
+    if (!createConnection())  return 1;
     MainWindow w;
     w.show();
 
