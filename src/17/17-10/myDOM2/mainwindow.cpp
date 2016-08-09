@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // 添加根元素
     QDomElement root = doc.createElement(QString("书库"));
-    doc.appendChild(root);
+    doc.appendChild(root);       /*  添加根元素  */
 
     // 添加第一个图书元素及其子元素
     QDomElement book = doc.createElement(QString("图书"));
@@ -33,9 +33,9 @@ MainWindow::MainWindow(QWidget *parent) :
     title.appendChild(text);
     text = doc.createTextNode(QString("shiming"));
     author.appendChild(text);
-    book.appendChild(title);
-    book.appendChild(author);
-    root.appendChild(book);
+    book.appendChild(title);        /* 图书元素 添加 书名元素 */
+    book.appendChild(author);   /* 图书元素 添加 作者元素 */
+    root.appendChild(book);        /* 根元素 添加 图书元素 */
 
     // 添加第二个图书元素及其子元素
     book = doc.createElement(QString("图书"));
@@ -56,8 +56,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QFile file("my.xml");
     if(!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) return ;
     QTextStream out(&file);
-    // 将文档保存到文件，4为子元素缩进字符数
-    doc.save(out, 4);
+    doc.save(out, 4);      // 将文档保存到文件，4为子元素缩进字符数
     file.close();
 }
 
@@ -66,40 +65,36 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-// 显示全部按钮
+/* 显示全部按钮 */
 void MainWindow::on_pushButton_5_clicked()
 {
-    // 先清空显示
-    ui->listWidget->clear();
+
+    ui->listWidget->clear();   // 先清空显示
     QFile file("my.xml");
     if (!file.open(QIODevice::ReadOnly)) return ;
     QDomDocument doc;
-    if (!doc.setContent(&file))
-    {
+    if (!doc.setContent(&file)) {
         file.close();
         return ;
     }
     file.close();
 
-    QDomElement docElem = doc.documentElement();
+    QDomElement docElem = doc.documentElement();  // 返回根元素
 
     QDomNode n = docElem.firstChild();
-    while(!n.isNull())
-    {
-        if (n.isElement())
-        {
-            QDomElement e = n.toElement();
-            ui->listWidget->addItem(e.tagName() + e.attribute(QString("编号")));
-            QDomNodeList list = e.childNodes();
-            for(int i=0; i<list.count(); i++)
-            {
-                QDomNode node = list.at(i);
-                if(node.isElement())
-                    ui->listWidget->addItem("   " + node.toElement().tagName()
-                                            + " : " + node.toElement().text());
+    while(!n.isNull()) {
+            if (n.isElement()) {
+                        QDomElement e = n.toElement();
+                        ui->listWidget->addItem(e.tagName() + e.attribute(QString("编号")));
+                        QDomNodeList list = e.childNodes();
+                        for(int i=0; i<list.count(); i++) {
+                                    QDomNode node = list.at(i);
+                                    if(node.isElement())
+                                        ui->listWidget->addItem("   " + node.toElement().tagName()
+                                                                + " : " + node.toElement().text());
+                        }
             }
-        }
-        n = n.nextSibling();
+            n = n.nextSibling();
     }
 }
 
@@ -112,13 +107,12 @@ void MainWindow::on_pushButton_4_clicked()
     QFile file("my.xml");
     if (!file.open(QIODevice::ReadOnly)) return;
     QDomDocument doc;
-    if (!doc.setContent(&file))
-    {
+    if (!doc.setContent(&file)) {
         file.close();
         return;
     }
     file.close();
-    QDomElement root = doc.documentElement();
+    QDomElement root = doc.documentElement(); // 获取根元素
 
     QDomElement book = doc.createElement(QString("图书"));
     QDomAttr id = doc.createAttribute(QString("编号"));
@@ -157,23 +151,20 @@ void MainWindow::doXml(const QString operate)
     QFile file("my.xml");
     if (!file.open(QIODevice::ReadOnly)) return ;
     QDomDocument doc;
-    if (!doc.setContent(&file))
-    {
+    if (!doc.setContent(&file)) {
         file.close();
         return ;
     }
     file.close();
 
     // 以标签名进行查找
-    QDomNodeList list = doc.elementsByTagName(QString("图书"));
+    QDomNodeList list = doc.elementsByTagName(QString("图书")); // 获取所有图书元素的列表
 
-    for(int i=0; i<list.count(); i++)
-    {
+    for(int i=0; i<list.count(); i++) {
         QDomElement e = list.at(i).toElement();
         if(e.attribute(QString("编号")) == ui->lineEdit->text())
         {   // 如果元素的“编号”属性值与我们所查的相同
-            if(operate == "delete")  {
-                // 如果是删除操作
+            if(operate == "delete")  { // 如果是删除操作
                 QDomElement root = doc.documentElement();
                 // 从根节点上删除该节点
                 root.removeChild(list.at(i));

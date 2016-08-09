@@ -9,8 +9,7 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
 
     QFile file("../myXmlStream/my.xml");
-    if (!file.open(QFile::ReadOnly | QFile::Text))
-    {
+    if (!file.open(QFile::ReadOnly | QFile::Text)) {
         qDebug()<<"Error: cannot open file";
         return 1;
     }
