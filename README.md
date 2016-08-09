@@ -71,3 +71,9 @@
 
 ## 21. WebKit
 
+-------------------------------------------------------
+
+[下载:  QtCrearor_快速入门 第2版.pdf](https://pan.baidu.com/s/1geALBb1)  
+
+[下载:  Qt及Qt Quick开发实战精解.pdf](http://download.csdn.net/detail/jxm_csdn/9599343) 
+
