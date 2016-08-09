@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    // 必须在创建数据库之前使用，不然无法在数据库中使用中文
+    // 蹇呴』鍦ㄥ垱寤烘暟鎹簱涔嬪墠浣跨敤锛屼笉鐒舵棤娉曞湪鏁版嵁搴撲腑浣跨敤涓枃
     QTextCodec::setCodecForTr(QTextCodec::codecForLocale());
     QTextCodec::setCodecForCStrings(QTextCodec::codecForLocale());
 

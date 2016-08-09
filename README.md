@@ -51,21 +51,21 @@
 
 ## 19. 进程和线程
 
-* 19-1 启动一个进程, QProcess
-
+* 19-1 启动一个进程, QProcess  
 * 19-2 共享内存 
+
 ```
  ipcs -m       查看共享内存
  ipcrm shmid   删除共享内存
 ```
+
 > 增加: 
 > QLocalServer和QLocalSocket 进程间通信  
 > http://tgstdj.blog.163.com/blog/static/74820040201243072238780/
 
 
 * 19-3  启动线程 
-
-* 19-4  线程同步
+* 19-4  线程同步  
 
 ## 21. WebKit
 
@@ -74,4 +74,12 @@
 [下载:  QtCrearor_快速入门 第2版.pdf](https://pan.baidu.com/s/1geALBb1)  
 
 [下载:  Qt及Qt Quick开发实战精解.pdf](http://download.csdn.net/detail/jxm_csdn/9599343) 
+
+-------------------------------------------------------
+
+# Qt及Qt Quick开发实战精解
+
+
+## 4. 数据库管理系统
+* 4-1   界面设计  
 

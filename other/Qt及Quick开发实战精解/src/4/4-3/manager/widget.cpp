@@ -35,11 +35,11 @@ Widget::~Widget()
     delete ui;
 }
 
-// ³öÊÛÉÌÆ·µÄÉÌÆ·ÀàĞÍ¸Ä±äÊ±
+// å‡ºå”®å•†å“çš„å•†å“ç±»å‹æ”¹å˜æ—¶
 void Widget::on_sellTypeComboBox_currentIndexChanged(QString type)
 {
-    if (type == "ÇëÑ¡ÔñÀàĞÍ") {
-        // ½øĞĞÆäËû²¿¼şµÄ×´Ì¬ÉèÖÃ
+    if (type == "è¯·é€‰æ‹©ç±»å‹") {
+        // è¿›è¡Œå…¶ä»–éƒ¨ä»¶çš„çŠ¶æ€è®¾ç½®
         on_sellCancelBtn_clicked();
     } else {
         ui->sellBrandComboBox->setEnabled(true);
@@ -50,7 +50,7 @@ void Widget::on_sellTypeComboBox_currentIndexChanged(QString type)
     }
 }
 
-// ³öÊÛÉÌÆ·µÄÆ·ÅÆ¸Ä±äÊ±
+// å‡ºå”®å•†å“çš„å“ç‰Œæ”¹å˜æ—¶
 void Widget::on_sellBrandComboBox_currentIndexChanged(QString brand)
 {
     ui->sellNumSpinBox->setValue(0);
@@ -73,16 +73,16 @@ void Widget::on_sellBrandComboBox_currentIndexChanged(QString brand)
     int num = query.value(0).toInt();
 
     if (num == 0) {
-        QMessageBox::information(this, tr("ÌáÊ¾"), tr("¸ÃÉÌÆ·ÒÑ¾­ÊÛÍê£¡"), QMessageBox::Ok);
+        QMessageBox::information(this, tr("æç¤º"), tr("è¯¥å•†å“å·²ç»å”®å®Œï¼"), QMessageBox::Ok);
     } else {
         ui->sellNumSpinBox->setEnabled(true);
         ui->sellNumSpinBox->setMaximum(num);
-        ui->sellLastNumLabel->setText(tr("Ê£ÓàÊıÁ¿£º%1").arg(num));
+        ui->sellLastNumLabel->setText(tr("å‰©ä½™æ•°é‡ï¼š%1").arg(num));
         ui->sellLastNumLabel->setVisible(true);
     }
 }
 
-// ³öÊÛÉÌÆ·ÊıÁ¿¸Ä±äÊ±
+// å‡ºå”®å•†å“æ•°é‡æ”¹å˜æ—¶
 void Widget::on_sellNumSpinBox_valueChanged(int value)
 {
     if (value == 0) {
@@ -98,7 +98,7 @@ void Widget::on_sellNumSpinBox_valueChanged(int value)
     }
 }
 
-// ³öÊÛÉÌÆ·µÄÈ¡Ïû°´Å¥
+// å‡ºå”®å•†å“çš„å–æ¶ˆæŒ‰é’®
 void Widget::on_sellCancelBtn_clicked()
 {
     ui->sellTypeComboBox->setCurrentIndex(0);
@@ -115,24 +115,24 @@ void Widget::on_sellCancelBtn_clicked()
     ui->sellLastNumLabel->setVisible(false);
 }
 
-// ³öÊÛÉÌÆ·µÄÈ·¶¨°´Å¥
+// å‡ºå”®å•†å“çš„ç¡®å®šæŒ‰é’®
 void Widget::on_sellOkBtn_clicked()
 {
     QString type = ui->sellTypeComboBox->currentText();
     QString name = ui->sellBrandComboBox->currentText();
     int value = ui->sellNumSpinBox->value();
-    // cellNumSpinBoxµÄ×î´óÖµ¾ÍÊÇÒÔÇ°µÄÊ£ÓàÁ¿
+    // cellNumSpinBoxçš„æœ€å¤§å€¼å°±æ˜¯ä»¥å‰çš„å‰©ä½™é‡
     int last = ui->sellNumSpinBox->maximum() - value;
 
     QSqlQuery query;
 
-    // »ñÈ¡ÒÔÇ°µÄÏúÊÛÁ¿
+    // è·å–ä»¥å‰çš„é”€å”®é‡
     query.exec(QString("select sell from brand where name='%1' and type='%2'")
                .arg(name).arg(type));
     query.next();
     int sell = query.value(0).toInt() + value;
 
-    // ÊÂÎñ²Ù×÷
+    // äº‹åŠ¡æ“ä½œ
     QSqlDatabase::database().transaction();
     bool rtn = query.exec(
                 QString("update brand set sell=%1,last=%2 where name='%3' and type='%4'")
@@ -140,7 +140,7 @@ void Widget::on_sellOkBtn_clicked()
 
     if (rtn) {
         QSqlDatabase::database().commit();
-        QMessageBox::information(this, tr("ÌáÊ¾"), tr("¹ºÂò³É¹¦£¡"), QMessageBox::Ok);
+        QMessageBox::information(this, tr("æç¤º"), tr("è´­ä¹°æˆåŠŸï¼"), QMessageBox::Ok);
         writeXml();
         showDailyList();
         on_sellCancelBtn_clicked();
@@ -152,7 +152,7 @@ void Widget::on_sellOkBtn_clicked()
 
 
 
-// »ñÈ¡µ±Ç°µÄÈÕÆÚ»òÕßÊ±¼ä
+// è·å–å½“å‰çš„æ—¥æœŸæˆ–è€…æ—¶é—´
 QString Widget::getDateTime(Widget::DateTimeType type)
 {
     QDateTime datetime = QDateTime::currentDateTime();
@@ -164,7 +164,7 @@ QString Widget::getDateTime(Widget::DateTimeType type)
     else return dateAndTime;
 }
 
-// ¶ÁÈ¡XMLÎÄµµ
+// è¯»å–XMLæ–‡æ¡£
 bool Widget::docRead()
 {
     QFile file("data.xml");
@@ -178,7 +178,7 @@ bool Widget::docRead()
     return true;
 }
 
-// Ğ´ÈëxmlÎÄµµ
+// å†™å…¥xmlæ–‡æ¡£
 bool Widget::docWrite()
 {
     QFile file("data.xml");
@@ -190,16 +190,16 @@ bool Widget::docWrite()
     return true;
 }
 
-// ½«ÏúÊÛ¼ÇÂ¼Ğ´ÈëÎÄµµ
+// å°†é”€å”®è®°å½•å†™å…¥æ–‡æ¡£
 void Widget::writeXml()
 {
-    // ÏÈ´ÓÎÄ¼ş¶ÁÈ¡
+    // å…ˆä»æ–‡ä»¶è¯»å–
     if (docRead()) {
         QString currentDate = getDateTime(Date);
         QDomElement root = doc.documentElement();
-        // ¸ù¾İÊÇ·ñÓĞÈÕÆÚ½Úµã½øĞĞ´¦Àí
+        // æ ¹æ®æ˜¯å¦æœ‰æ—¥æœŸèŠ‚ç‚¹è¿›è¡Œå¤„ç†
         if (!root.hasChildNodes()) {
-            QDomElement date = doc.createElement(QString("ÈÕÆÚ"));
+            QDomElement date = doc.createElement(QString("æ—¥æœŸ"));
             QDomAttr curDate = doc.createAttribute("date");
             curDate.setValue(currentDate);
             date.setAttributeNode(curDate);
@@ -207,11 +207,11 @@ void Widget::writeXml()
             createNodes(date);
         } else {
             QDomElement date = root.lastChild().toElement();
-            // ¸ù¾İÊÇ·ñÒÑ¾­ÓĞ½ñÌìµÄÈÕÆÚ½Úµã½øĞĞ´¦Àí
+            // æ ¹æ®æ˜¯å¦å·²ç»æœ‰ä»Šå¤©çš„æ—¥æœŸèŠ‚ç‚¹è¿›è¡Œå¤„ç†
             if (date.attribute("date") == currentDate) {
                 createNodes(date);
             } else {
-                QDomElement date = doc.createElement(QString("ÈÕÆÚ"));
+                QDomElement date = doc.createElement(QString("æ—¥æœŸ"));
                 QDomAttr curDate = doc.createAttribute("date");
                 curDate.setValue(currentDate);
                 date.setAttributeNode(curDate);
@@ -219,25 +219,25 @@ void Widget::writeXml()
                 createNodes(date);
             }
         }
-        // Ğ´Èëµ½ÎÄ¼ş
+        // å†™å…¥åˆ°æ–‡ä»¶
         docWrite();
     }
 }
 
-// ´´½¨½Úµã
+// åˆ›å»ºèŠ‚ç‚¹
 void Widget::createNodes(QDomElement &date)
 {
-    QDomElement time = doc.createElement(QString("Ê±¼ä"));
+    QDomElement time = doc.createElement(QString("æ—¶é—´"));
     QDomAttr curTime = doc.createAttribute("time");
     curTime.setValue(getDateTime(Time));
     time.setAttributeNode(curTime);
     date.appendChild(time);
 
-    QDomElement type = doc.createElement(QString("ÀàĞÍ"));
-    QDomElement brand = doc.createElement(QString("Æ·ÅÆ"));
-    QDomElement price = doc.createElement(QString("µ¥¼Û"));
-    QDomElement num = doc.createElement(QString("ÊıÁ¿"));
-    QDomElement sum = doc.createElement(QString("½ğ¶î"));
+    QDomElement type = doc.createElement(QString("ç±»å‹"));
+    QDomElement brand = doc.createElement(QString("å“ç‰Œ"));
+    QDomElement price = doc.createElement(QString("å•ä»·"));
+    QDomElement num = doc.createElement(QString("æ•°é‡"));
+    QDomElement sum = doc.createElement(QString("é‡‘é¢"));
     QDomText text;
     text = doc.createTextNode(QString("%1")
                               .arg(ui->sellTypeComboBox->currentText()));
@@ -263,7 +263,7 @@ void Widget::createNodes(QDomElement &date)
 }
 
 
-// ÏÔÊ¾ÈÕÏúÊÛÇåµ¥
+// æ˜¾ç¤ºæ—¥é”€å”®æ¸…å•
 void Widget::showDailyList()
 {
     ui->dailyList->clear();
@@ -281,10 +281,10 @@ void Widget::showDailyList()
             QString date = dateElement.attribute("date");
             if (date == currentDate) {
                 ui->dailyList->addItem("");
-                ui->dailyList->addItem(QString("ÈÕÆÚ£º%1").arg(date));
+                ui->dailyList->addItem(QString("æ—¥æœŸï¼š%1").arg(date));
                 ui->dailyList->addItem("");
                 QDomNodeList children = dateElement.childNodes();
-                // ±éÀúµ±ÈÕÏúÊÛµÄËùÓĞÉÌÆ·
+                // éå†å½“æ—¥é”€å”®çš„æ‰€æœ‰å•†å“
                 for (int i=0; i<children.count(); i++) {
                     QDomNode node = children.at(i);
                     QString time = node.toElement().attribute("time");
@@ -295,9 +295,9 @@ void Widget::showDailyList()
                     QString num = list.at(3).toElement().text();
                     QString sum = list.at(4).toElement().text();
 
-                    QString str = time + " ³öÊÛ " + brand + type
-                            + " " + num + "Ì¨£¬ " + "µ¥¼Û£º" + price
-                            + "Ôª£¬ ¹²" + sum + "Ôª";
+                    QString str = time + " å‡ºå”® " + brand + type
+                            + " " + num + "å°ï¼Œ " + "å•ä»·ï¼š" + price
+                            + "å…ƒï¼Œ å…±" + sum + "å…ƒ";
                     QListWidgetItem *tempItem = new QListWidgetItem;
                     tempItem->setText("**************************");
                     tempItem->setTextAlignment(Qt::AlignCenter);

@@ -27,7 +27,7 @@ static bool createConnection()
 
     // 创建品牌表
     query.exec("create table brand(id varchar primary key, name varchar, "
-               "type varchar, price int, sum int, sell int, last int)");
+                         "type varchar, price int, sum int, sell int, last int)");
     query.exec(QString("insert into brand values('01', '海信', '电视', 3699, 50, 10, 40)"));
     query.exec(QString("insert into brand values('02', '创维', '电视', 3499, 20, 5, 15)"));
     query.exec(QString("insert into brand values('03', '海尔', '电视', 4199, 80, 40, 40)"));

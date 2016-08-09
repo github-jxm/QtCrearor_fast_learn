@@ -267,7 +267,7 @@ void PieView::paintEvent(QPaintEvent *event)
 
     if (validItems > 0) {
 
-        // ����Բ�α�״ͼ
+        // 绘制圆形饼状图
         painter.save();
         painter.translate(pieRect.x() - horizontalScrollBar()->value(),
                           pieRect.y() - verticalScrollBar()->value());
@@ -302,7 +302,7 @@ void PieView::paintEvent(QPaintEvent *event)
         }
         painter.restore();
 
-        // ���Ʊ�״ͼ�Աߵ�ͼʾ
+        // 绘制饼状图旁边的图示
         int keyNumber = 0;
 
         for (row = 0; row < model()->rowCount(rootIndex()); ++row) {

@@ -15,27 +15,27 @@ static bool createConnection()
     db.setUserName("yafei");
     db.setPassword("123456");
     if (!db.open()) {
-        //ÌáÊ¾³ö´í
+        //æç¤ºå‡ºé”™
         return false;
     }
 
     QSqlQuery query;
 
-    // ´´½¨·ÖÀà±í
+    // åˆ›å»ºåˆ†ç±»è¡¨
     query.exec("create table type(id varchar primary key, name varchar)");
-    query.exec(QString("insert into type values('0', 'ÇëÑ¡ÔñÀàĞÍ')"));
-    query.exec(QString("insert into type values('01', 'µçÊÓ')"));
-    query.exec(QString("insert into type values('02', '¿Õµ÷')"));
+    query.exec(QString("insert into type values('0', 'è¯·é€‰æ‹©ç±»å‹')"));
+    query.exec(QString("insert into type values('01', 'ç”µè§†')"));
+    query.exec(QString("insert into type values('02', 'ç©ºè°ƒ')"));
 
-    // ´´½¨Æ·ÅÆ±í
+    // åˆ›å»ºå“ç‰Œè¡¨
     query.exec("create table brand(id varchar primary key, name varchar, "
                "type varchar, price int, sum int, sell int, last int)");
-    query.exec(QString("insert into brand values('01', 'º£ĞÅ', 'µçÊÓ', 3699, 50, 10, 40)"));
-    query.exec(QString("insert into brand values('02', '´´Î¬', 'µçÊÓ', 3499, 20, 5, 15)"));
-    query.exec(QString("insert into brand values('03', 'º£¶û', 'µçÊÓ', 4199, 80, 40, 40)"));
-    query.exec(QString("insert into brand values('04', 'ÍõÅÆ', 'µçÊÓ', 3999, 40, 10, 30)"));
-    query.exec(QString("insert into brand values('05', 'º£¶û', '¿Õµ÷', 2899, 60, 10, 50)"));
-    query.exec(QString("insert into brand values('06', '¸ñÁ¦', '¿Õµ÷', 2799, 70, 20, 50)"));
+    query.exec(QString("insert into brand values('01', 'æµ·ä¿¡', 'ç”µè§†', 3699, 50, 10, 40)"));
+    query.exec(QString("insert into brand values('02', 'åˆ›ç»´', 'ç”µè§†', 3499, 20, 5, 15)"));
+    query.exec(QString("insert into brand values('03', 'æµ·å°”', 'ç”µè§†', 4199, 80, 40, 40)"));
+    query.exec(QString("insert into brand values('04', 'ç‹ç‰Œ', 'ç”µè§†', 3999, 40, 10, 30)"));
+    query.exec(QString("insert into brand values('05', 'æµ·å°”', 'ç©ºè°ƒ', 2899, 60, 10, 50)"));
+    query.exec(QString("insert into brand values('06', 'æ ¼åŠ›', 'ç©ºè°ƒ', 2799, 70, 20, 50)"));
 
     return true;
 }
@@ -49,7 +49,7 @@ static bool createXml()
     QDomProcessingInstruction instruction;
     instruction = doc.createProcessingInstruction("xml","version=\"1.0\" encoding=\"UTF-8\"");
     doc.appendChild(instruction);
-    QDomElement root = doc.createElement(QString("ÈÕÏúÊÛÇåµ¥"));
+    QDomElement root = doc.createElement(QString("æ—¥é”€å”®æ¸…å•"));
     doc.appendChild(root);
 
     QTextStream out(&file);
