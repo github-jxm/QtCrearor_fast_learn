@@ -13,8 +13,7 @@ static bool createConnection()
     db.setUserName("yafei");
     db.setPassword("123456");
     if (!db.open()) {
-        //提示出错
-        return false;
+        return false;    //提示出错
     }
 
     QSqlQuery query;

@@ -341,46 +341,46 @@ void Widget::createChartModelView()
     pieChart->setSelectionModel(selectionModel);
 }
 
-// 显示销售记录图表
+/* 销售统计页面   显示销售记录图表 */
 void Widget::showChart()
 {
     QSqlQuery query;
     query.exec(QString("select name,sell from brand where type='%1'")
-               .arg(ui->typeComboBox->currentText()));
+                       .arg(ui->typeComboBox->currentText()));
 
     chartModel->removeRows(0, chartModel->rowCount(QModelIndex()), QModelIndex());
 
     int row = 0;
 
     while(query.next()) {
-        int r = qrand() % 256;
-        int g = qrand() % 256;
-        int b = qrand() % 256;
+            int r = qrand() % 256;
+            int g = qrand() % 256;
+            int b = qrand() % 256;
 
-        chartModel->insertRows(row, 1, QModelIndex());
+            chartModel->insertRows(row, 1, QModelIndex());
 
-        chartModel->setData(chartModel->index(row, 0, QModelIndex()),
-                            query.value(0).toString());
-        chartModel->setData(chartModel->index(row, 1, QModelIndex()),
-                            query.value(1).toInt());
-        chartModel->setData(chartModel->index(row, 0, QModelIndex()),
-                            QColor(r, g, b), Qt::DecorationRole);
-        row++;
+            chartModel->setData(chartModel->index(row, 0, QModelIndex()),
+                                                  query.value(0).toString());
+            chartModel->setData(chartModel->index(row, 1, QModelIndex()),
+                                                   query.value(1).toInt());
+            chartModel->setData(chartModel->index(row, 0, QModelIndex()),
+                                                   QColor(r, g, b), Qt::DecorationRole);
+            row++;
     }
 }
 
-// 销售统计页面的类型选择框
+/*  销售统计页面 - 类型选择框 */
 void Widget::on_typeComboBox_currentIndexChanged(QString type)
 {
     if (type != "请选择类型")
-        showChart();
+            showChart();
 }
 
-// 更新显示按钮
+/* 销售统计页面 -  更新显示按钮 */
 void Widget::on_updateBtn_clicked()
 {
     if (ui->typeComboBox->currentText() != "请选择类型")
-        showChart();
+            showChart();
 }
 
 // 商品管理按钮

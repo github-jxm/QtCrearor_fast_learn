@@ -34,7 +34,7 @@ Widget::~Widget()
 }
 
 // 出售商品的商品类型改变时
-void Widget::on_sellTypeComboBox_currentIndexChanged(QString type)
+void Widget::on_sellTypeComboBox_currentIndexChanged(QString type)  // 类型
 {
     if (type == "请选择类型") {
         // 进行其他部件的状态设置
@@ -63,12 +63,12 @@ void Widget::on_sellBrandComboBox_currentIndexChanged(QString brand)
     query.next();
     ui->sellPriceLineEdit->setEnabled(true);
     ui->sellPriceLineEdit->setReadOnly(true);
-    ui->sellPriceLineEdit->setText(query.value(0).toString());
+    ui->sellPriceLineEdit->setText(query.value(0).toString());  /* 单价 */
 
     query.exec(QString("select last from brand where name='%1' and type='%2'")
                .arg(brand).arg(ui->sellTypeComboBox->currentText()));
     query.next();
-    int num = query.value(0).toInt();
+    int num = query.value(0).toInt(); /* 剩余数量 */
 
     if (num == 0) {
         QMessageBox::information(this, tr("提示"), tr("该商品已经售完！"), QMessageBox::Ok);
@@ -91,7 +91,7 @@ void Widget::on_sellNumSpinBox_valueChanged(int value)
         ui->sellSumLineEdit->setEnabled(true);
         ui->sellSumLineEdit->setReadOnly(true);
         qreal sum = value * ui->sellPriceLineEdit->text().toInt();
-        ui->sellSumLineEdit->setText(QString::number(sum));
+        ui->sellSumLineEdit->setText(QString::number(sum));  /* 金额*/
         ui->sellOkBtn->setEnabled(true);
     }
 }
