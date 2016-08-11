@@ -6,10 +6,10 @@ SpinBoxDelegate::SpinBoxDelegate(QObject *parent) :
 {
 }
 
-// 创建编辑器
+/* 创建编辑器 */
 QWidget *SpinBoxDelegate::createEditor(QWidget *parent,
-                                       const QStyleOptionViewItem &/* option */,
-                                       const QModelIndex &/* index */) const
+                                           const QStyleOptionViewItem &/* option */,
+                                           const QModelIndex &  /* index */) const
 {
     QSpinBox *editor = new QSpinBox(parent);
     editor->setMinimum(0);
@@ -18,7 +18,7 @@ QWidget *SpinBoxDelegate::createEditor(QWidget *parent,
     return editor;
 }
 
-// 为编辑器设置数据
+/* 为编辑器设置数据 */
 void SpinBoxDelegate::setEditorData(QWidget *editor,
                                     const QModelIndex &index) const
 {
@@ -28,7 +28,7 @@ void SpinBoxDelegate::setEditorData(QWidget *editor,
     spinBox->setValue(value);
 }
 
-// 将数据写入到模型
+/* 将数据写入到模型 */
 void SpinBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
                                    const QModelIndex &index) const
 {
@@ -39,7 +39,7 @@ void SpinBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
     model->setData(index, value, Qt::EditRole);
 }
 
-// 更新编辑器几何布局
+/* 更新编辑器几何布局 */
 void SpinBoxDelegate::updateEditorGeometry(QWidget *editor,
                                            const QStyleOptionViewItem &option,
                                            const QModelIndex &/* index */) const
