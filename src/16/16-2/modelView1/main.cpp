@@ -8,8 +8,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     /* 1.  模型 */
-
-    QStandardItemModel model;// 创建标准项模型
+    QStandardItemModel model;        // 创建标准项模型
     // 获取模型的根项（Root Item），根项是不可见的
     QStandardItem *parentItem = model.invisibleRootItem();
 
@@ -20,8 +19,8 @@ int main(int argc, char *argv[])
     pixmap0.fill("red");
     item0->setIcon(QIcon(pixmap0));
     item0->setToolTip("indexA");
-    // 将item0  作为根项的子项
-    parentItem->appendRow(item0);
+
+    parentItem->appendRow(item0);  // 将item0  作为根项的子项
 
     // 将创建的标准项作为新的父项
     parentItem = item0;

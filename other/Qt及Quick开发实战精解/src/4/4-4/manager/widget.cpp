@@ -315,10 +315,10 @@ void Widget::showDailyList()
 }
 
 
-// 创建销售记录图表的模型和视图
+// 创建 销售统计 图表的模型和视图
 void Widget::createChartModelView()
 {
-    chartModel = new QStandardItemModel(this);
+    chartModel = new QStandardItemModel(this);   // 树形结构Model
     chartModel->setColumnCount(2);
     chartModel->setHeaderData(0, Qt::Horizontal, QString("品牌"));
     chartModel->setHeaderData(1, Qt::Horizontal, QString("销售数量"));
@@ -326,8 +326,8 @@ void Widget::createChartModelView()
     QSplitter *splitter = new QSplitter(ui->chartPage);
     splitter->resize(700, 320);
     splitter->move(0, 80);
-    QTableView *table = new QTableView;
-    PieView *pieChart = new PieView;
+    QTableView *table = new QTableView;  /* 销售统计 左侧   */
+    PieView *pieChart = new PieView;        /* 销售统计 右侧   */
     splitter->addWidget(table);
     splitter->addWidget(pieChart);
     splitter->setStretchFactor(0, 1);

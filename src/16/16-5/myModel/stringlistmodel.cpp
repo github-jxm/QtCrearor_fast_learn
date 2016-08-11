@@ -42,13 +42,14 @@ Qt::ItemFlags StringListModel::flags(const QModelIndex &index) const
     return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
 }
 
+/* 编辑*/
 bool StringListModel::setData(const QModelIndex &index,
                               const QVariant &value, int role)
 {
     if (index.isValid() && role == Qt::EditRole) {
 
         stringList.replace(index.row(), value.toString());
-        emit dataChanged(index, index);
+        emit dataChanged(index, index);  // 向视图发信号,通知数据已经改变
         return true;
     }
     return false;

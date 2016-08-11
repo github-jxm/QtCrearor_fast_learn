@@ -270,7 +270,7 @@ void PieView::paintEvent(QPaintEvent *event)
         // 绘制圆形饼状图
         painter.save();
         painter.translate(pieRect.x() - horizontalScrollBar()->value(),
-                          pieRect.y() - verticalScrollBar()->value());
+                                      pieRect.y() - verticalScrollBar()->value());
         painter.drawEllipse(0, 0, pieSize, pieSize);
         double startAngle = 0.0;
         int row;
