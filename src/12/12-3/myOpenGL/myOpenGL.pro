@@ -7,3 +7,5 @@ HEADERS += \
 SOURCES += \
     myglwidget.cpp \
     main.cpp
+
+ LIBS += -lGL -lGLU -lglut

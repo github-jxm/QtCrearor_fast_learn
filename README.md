@@ -29,7 +29,14 @@
 
 ## 11. 图形视图.动画和状态机
 
-## 13. 3D 绘图
+## 12. 3D 绘图  
+
+`sudo apt-get install freeglut3 freeglut3-dev`
+
+* 12-4  使用纹理贴图
+* 12-5  在3D场景中绘制2D图形
+
+## 13.   
 
 ## 14. Phonon多媒体框架
 
