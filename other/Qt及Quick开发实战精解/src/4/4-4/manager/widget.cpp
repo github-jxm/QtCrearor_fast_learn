@@ -314,7 +314,7 @@ void Widget::showDailyList()
 }
 
 
-// 创建 销售统计 图表的模型和视图
+/*    创建 销售统计 图表的模型和视图 */
 void Widget::createChartModelView()
 {
         chartModel = new QStandardItemModel(this);   // 树形结构Model

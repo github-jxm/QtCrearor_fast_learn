@@ -248,6 +248,7 @@ QModelIndex PieView::moveCursor(QAbstractItemView::CursorAction cursorAction,
         return current;
 }
 
+/* *****   重绘时间处理函数 ************ */
 void PieView::paintEvent(QPaintEvent *event)
 {
         QItemSelectionModel *selections = selectionModel();
