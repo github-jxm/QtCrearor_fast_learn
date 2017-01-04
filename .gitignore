@@ -3,4 +3,6 @@
 .*.swp
 *.db
 
+Makefile
+
 .idea
