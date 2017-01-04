@@ -12,7 +12,8 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForTr(QTextCodec::codecForLocale());
     QTextCodec::setCodecForCStrings(QTextCodec::codecForLocale());
 
-    if(!createConnection() || !createXml()) return 0;
+    if(!createConnection() || !createXml())
+        return 0;
 
     Widget w;
     LoginDialog dlg;

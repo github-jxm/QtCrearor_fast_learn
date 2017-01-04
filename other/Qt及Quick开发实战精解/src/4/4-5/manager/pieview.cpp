@@ -7,8 +7,8 @@
 
 #include "pieview.h"
 
-PieView::PieView(QWidget *parent)
-    : QAbstractItemView(parent)
+PieView::PieView(QWidget *parent) :
+        QAbstractItemView(parent)
 {
     horizontalScrollBar()->setRange(0, 0);
     verticalScrollBar()->setRange(0, 0);
@@ -44,10 +44,11 @@ void PieView::dataChanged(const QModelIndex &topLeft,
 
 bool PieView::edit(const QModelIndex &index, EditTrigger trigger, QEvent *event)
 {
-    if (index.column() == 0)
+    if (index.column() == 0){
         return QAbstractItemView::edit(index, trigger, event);
-    else
+    }else{
         return false;
+    }
 }
 
 
@@ -267,10 +268,10 @@ void PieView::paintEvent(QPaintEvent *event)
 
     if (validItems > 0) {
 
-        // 绘制圆形饼状图
+        /* 绘制圆形饼状图 */
         painter.save();
-        painter.translate(pieRect.x() - horizontalScrollBar()->value(),
-                          pieRect.y() - verticalScrollBar()->value());
+        painter.translate( pieRect.x() - horizontalScrollBar()->value(),
+                                       pieRect.y() - verticalScrollBar()->value()     );
         painter.drawEllipse(0, 0, pieSize, pieSize);
         double startAngle = 0.0;
         int row;
@@ -284,18 +285,18 @@ void PieView::paintEvent(QPaintEvent *event)
                 double angle = 360*value/totalValue;
 
                 QModelIndex colorIndex = model()->index(row, 0, rootIndex());
-                QColor color = QColor(model()->data(colorIndex,
-                                Qt::DecorationRole).toString());
+                QColor color = QColor(model()->data(colorIndex, Qt::DecorationRole).toString());
 
-                if (currentIndex() == index)
+                if (currentIndex() == index){
                     painter.setBrush(QBrush(color, Qt::Dense4Pattern));
-                else if (selections->isSelected(index))
+                }else if (selections->isSelected(index)){
                     painter.setBrush(QBrush(color, Qt::Dense3Pattern));
-                else
+                }else{
                     painter.setBrush(QBrush(color));
+                }
 
                 painter.drawPie(0, 0, pieSize, pieSize, int(startAngle*16),
-                                int(angle*16));
+                                            int(angle*16) );
 
                 startAngle += angle;
             }
@@ -460,12 +461,13 @@ int PieView::verticalOffset() const
 QRect PieView::visualRect(const QModelIndex &index) const
 {
     QRect rect = itemRect(index);
-    if (rect.isValid())
+    if (rect.isValid()){
         return QRect(rect.left() - horizontalScrollBar()->value(),
                      rect.top() - verticalScrollBar()->value(),
                      rect.width(), rect.height());
-    else
+    }else{
         return rect;
+    }
 }
 
 QRegion PieView::visualRegionForSelection(const QItemSelection &selection) const

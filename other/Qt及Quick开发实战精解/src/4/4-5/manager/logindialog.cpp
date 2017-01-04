@@ -21,7 +21,7 @@ LoginDialog::~LoginDialog()
     delete ui;
 }
 
-// 登录按钮
+/* 登录按钮*/
 void LoginDialog::on_loginBtn_clicked()
 {
     if (ui->pwdLineEdit->text().isEmpty()) {
@@ -35,8 +35,7 @@ void LoginDialog::on_loginBtn_clicked()
         if (query.value(0).toString() == ui->pwdLineEdit->text()) {
             QDialog::accept();
         } else {
-            QMessageBox::warning(this, tr("密码错误"),
-                                 tr("请输入正确的密码再登录！"), QMessageBox::Ok);
+            QMessageBox::warning(this, tr("密码错误"), tr("请输入正确的密码再登录！"), QMessageBox::Ok);
             ui->pwdLineEdit->clear();
             ui->pwdLineEdit->setFocus();
         }
