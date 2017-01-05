@@ -21,16 +21,16 @@ static bool createConnection()
 
     QSqlQuery query;
 
-    // 创建分类表
+    /* 创建分类表*/
     query.exec("create table type(id varchar primary key, name varchar)");
     query.exec(QString("insert into type values('0', '请选择类型')"));
     query.exec(QString("insert into type values('01', '电视')"));
     query.exec(QString("insert into type values('02', '空调')"));
 
-    // 创建品牌表
-    query.exec("create table brand(id varchar primary key, name varchar, "
-               "type varchar, price int, sum int, sell int, last int)");
-    query.exec(QString("insert into brand values('01', '海信', '电视', 3699, 50, 10, 40)"));
+    /* 创建品牌表*/
+    query.exec( "create table brand(id varchar primary key, name varchar, "
+                         "type varchar, price int, sum int, sell int, last int)");
+    query.exec(QString("insert into brand values('01', '海信', '电视', 3699, 50, 10, 40)")); /*序号,品牌,类型,金额,总数,销售数量,剩余 */
     query.exec(QString("insert into brand values('02', '创维', '电视', 3499, 20, 5, 15)"));
     query.exec(QString("insert into brand values('03', '海尔', '电视', 4199, 80, 40, 40)"));
     query.exec(QString("insert into brand values('04', '王牌', '电视', 3999, 40, 10, 30)"));

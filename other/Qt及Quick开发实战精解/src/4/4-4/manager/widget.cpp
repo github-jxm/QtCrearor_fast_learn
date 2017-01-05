@@ -3,6 +3,7 @@
 #include <QtSql>
 #include <QtGui>
 #include "pieview.h"
+#include <QDebug>
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -30,8 +31,8 @@ Widget::Widget(QWidget *parent) :
 
         showDailyList();
 
-        ui->typeComboBox->setModel(typeModel);
-        createChartModelView();
+        ui->typeComboBox->setModel(typeModel);  // 类型
+        createChartModelView();      // 创建 销售统计 图表的模型和视图
 }
 
 Widget::~Widget()
@@ -39,25 +40,24 @@ Widget::~Widget()
         delete ui;
 }
 
-// 出售商品的商品类型改变时
+/* 出售商品 --- 商品类型 改变时*/
 void Widget::on_sellTypeComboBox_currentIndexChanged(QString type)
 {
         if (type == "请选择类型") {
-                // 进行其他部件的状态设置
-                on_sellCancelBtn_clicked();
+                on_sellCancelBtn_clicked(); // 进行其他部件的状态设置
         } else {
-                ui->sellBrandComboBox->setEnabled(true);
+                ui->sellBrandComboBox->setEnabled(true);        // 品牌
                 QSqlQueryModel *model = new QSqlQueryModel(this);
                 model->setQuery(QString("select name from brand where type='%1'").arg(type));
-                ui->sellBrandComboBox->setModel(model);
+                ui->sellBrandComboBox->setModel(model);      // 品牌
                 ui->sellCancelBtn->setEnabled(true);
         }
 }
 
-// 出售商品的品牌改变时
+/* 出售商品---品牌 改变时 */
 void Widget::on_sellBrandComboBox_currentIndexChanged(QString brand)
 {
-        ui->sellNumSpinBox->setValue(0);
+        ui->sellNumSpinBox->setValue(0);            // 数量
         ui->sellNumSpinBox->setEnabled(false);
         ui->sellSumLineEdit->clear();
         ui->sellSumLineEdit->setEnabled(false);
@@ -65,7 +65,7 @@ void Widget::on_sellBrandComboBox_currentIndexChanged(QString brand)
 
         QSqlQuery query;
         query.exec(QString("select price from brand where name='%1' and type='%2'")
-                   .arg(brand).arg(ui->sellTypeComboBox->currentText()));
+                       .arg(brand).arg(ui->sellTypeComboBox->currentText()));
         query.next();
         ui->sellPriceLineEdit->setEnabled(true);
         ui->sellPriceLineEdit->setReadOnly(true);
@@ -79,14 +79,14 @@ void Widget::on_sellBrandComboBox_currentIndexChanged(QString brand)
         if (num == 0) {
                 QMessageBox::information(this, tr("提示"), tr("该商品已经售完！"), QMessageBox::Ok);
         } else {
-                ui->sellNumSpinBox->setEnabled(true);
+                ui->sellNumSpinBox->setEnabled(true);       //　数量
                 ui->sellNumSpinBox->setMaximum(num);
                 ui->sellLastNumLabel->setText(tr("剩余数量：%1").arg(num));
                 ui->sellLastNumLabel->setVisible(true);
         }
 }
 
-// 出售商品数量改变时
+/* 出售商品--数量 改变时*/
 void Widget::on_sellNumSpinBox_valueChanged(int value)
 {
         if (value == 0) {
@@ -102,7 +102,7 @@ void Widget::on_sellNumSpinBox_valueChanged(int value)
         }
 }
 
-// 出售商品的取消按钮
+/* 出售商品--取消 按钮 */
 void Widget::on_sellCancelBtn_clicked()
 {
         ui->sellTypeComboBox->setCurrentIndex(0);
@@ -119,7 +119,7 @@ void Widget::on_sellCancelBtn_clicked()
         ui->sellLastNumLabel->setVisible(false);
 }
 
-// 出售商品的确定按钮
+/* 出售商品---确定按钮*/
 void Widget::on_sellOkBtn_clicked()
 {
         QString type = ui->sellTypeComboBox->currentText();
@@ -136,11 +136,12 @@ void Widget::on_sellOkBtn_clicked()
         query.next();
         int sell = query.value(0).toInt() + value;
 
-        // 事务操作
+        /* 事务操作*/
         QSqlDatabase::database().transaction();
-        bool rtn = query.exec(
+        bool rtn = query.exec(              // 更新, 销售量，剩余数量
                     QString("update brand set sell=%1,last=%2 where name='%3' and type='%4'")
-                    .arg(sell).arg(last).arg(name).arg(type));
+                    .arg(sell).arg(last).arg(name).arg(type)
+                                            );
 
         if (rtn) {
                 QSqlDatabase::database().commit();
@@ -153,36 +154,37 @@ void Widget::on_sellOkBtn_clicked()
         }
 }
 
-
-
-
-// 获取当前的日期或者时间
+/* 获取当前的日期或者时间*/
 QString Widget::getDateTime(Widget::DateTimeType type)
 {
         QDateTime datetime = QDateTime::currentDateTime();
         QString date = datetime.toString("yyyy-MM-dd");
         QString time = datetime.toString("hh:mm");
         QString dateAndTime = datetime.toString("yyyy-MM-dd dddd hh:mm");
-        if(type == Date) return date;
-        else if(type == Time) return time;
-        else return dateAndTime;
+        if(type == Date){
+            return date;
+        }else if(type == Time){
+            return time;
+        }else{
+            return dateAndTime;
+        }
 }
 
-// 读取XML文档
+/* 读取XML文档*/
 bool Widget::docRead()
 {
-        QFile file("data.xml");
-        if(!file.open(QIODevice::ReadOnly))
-                return false;
-        if(!doc.setContent(&file)){
-                file.close();
-                return false;
-        }
-        file.close();
-        return true;
+    QFile file("data.xml");
+    if(!file.open(QIODevice::ReadOnly))
+            return false;
+    if(!doc.setContent(&file)){
+            file.close();
+            return false;
+    }
+    file.close();
+    return true;
 }
 
-// 写入xml文档
+/* 写入xml文档 */
 bool Widget::docWrite()
 {
         QFile file("data.xml");
@@ -197,77 +199,69 @@ bool Widget::docWrite()
 // 将销售记录写入文档
 void Widget::writeXml()
 {
-        // 先从文件读取
-        if (docRead()) {
-                QString currentDate = getDateTime(Date);
-                QDomElement root = doc.documentElement();
-                // 根据是否有日期节点进行处理
-                if (!root.hasChildNodes()) {
-                            QDomElement date = doc.createElement(QString("日期"));
-                            QDomAttr curDate = doc.createAttribute("date");
-                            curDate.setValue(currentDate);
-                            date.setAttributeNode(curDate);
-                            root.appendChild(date);
-                            createNodes(date);
+    // 先从文件读取
+    if (docRead()) {
+        QString currentDate = getDateTime(Date);            //获取当前时间
+        QDomElement root = doc.documentElement();
+
+        if (!root.hasChildNodes()) {     //没有日期节点，则添加日期节点
+                QDomElement date = doc.createElement(QString("日期"));
+                QDomAttr curDate  = doc.createAttribute("date");
+                curDate.setValue(currentDate);
+                date.setAttributeNode(curDate);
+                root.appendChild(date);
+                createNodes(date);
+        } else {
+                QDomElement date = root.lastChild().toElement();
+                if (date.attribute("date") == currentDate) {  // 判断，是否已有,今天的日期节点
+                    createNodes(date);
                 } else {
-                            QDomElement date = root.lastChild().toElement();
-                            // 根据是否已经有今天的日期节点进行处理
-                            if (date.attribute("date") == currentDate) {
-                                    createNodes(date);
-                            } else {
-                                    QDomElement date = doc.createElement(QString("日期"));
-                                    QDomAttr curDate = doc.createAttribute("date");
-                                    curDate.setValue(currentDate);
-                                    date.setAttributeNode(curDate);
-                                    root.appendChild(date);
-                                    createNodes(date);
-                            }
+                    QDomElement date = doc.createElement(QString("日期"));
+                    QDomAttr curDate = doc.createAttribute("date");
+                    curDate.setValue(currentDate);
+                    date.setAttributeNode(curDate);
+                    root.appendChild(date);
+                    createNodes(date);
                 }
-                // 写入到文件
-                docWrite();
         }
+        docWrite();  // 写入到文件
+    }
 }
 
-// 创建节点
+/* 创建节点*/
 void Widget::createNodes(QDomElement &date)
 {
-        QDomElement time = doc.createElement(QString("时间"));
-        QDomAttr curTime = doc.createAttribute("time");
-        curTime.setValue(getDateTime(Time));
-        time.setAttributeNode(curTime);
-        date.appendChild(time);
+    QDomElement time = doc.createElement(QString("时间"));
+    QDomAttr curTime = doc.createAttribute("time");
+    curTime.setValue(getDateTime(Time));
+    time.setAttributeNode(curTime);
+    date.appendChild(time);
 
-        QDomElement type = doc.createElement(QString("类型"));
-        QDomElement brand = doc.createElement(QString("品牌"));
-        QDomElement price = doc.createElement(QString("单价"));
-        QDomElement num = doc.createElement(QString("数量"));
-        QDomElement sum = doc.createElement(QString("金额"));
-        QDomText text;
-        text = doc.createTextNode(QString("%1")
-                                  .arg(ui->sellTypeComboBox->currentText()));
-        type.appendChild(text);
-        text = doc.createTextNode(QString("%1")
-                                  .arg(ui->sellBrandComboBox->currentText()));
-        brand.appendChild(text);
-        text = doc.createTextNode(QString("%1")
-                                  .arg(ui->sellPriceLineEdit->text()));
-        price.appendChild(text);
-        text = doc.createTextNode(QString("%1")
-                                  .arg(ui->sellNumSpinBox->value()));
-        num.appendChild(text);
-        text = doc.createTextNode(QString("%1")
-                                  .arg(ui->sellSumLineEdit->text()));
-        sum.appendChild(text);
+    QDomElement type    = doc.createElement(QString("类型"));
+    QDomElement brand = doc.createElement(QString("品牌"));
+    QDomElement price   = doc.createElement(QString("单价"));
+    QDomElement num    = doc.createElement(QString("数量"));
+    QDomElement sum    = doc.createElement(QString("金额"));
+    QDomText text;
+    text = doc.createTextNode(QString("%1") .arg(ui->sellTypeComboBox->currentText()));
+    type.appendChild(text);
+    text = doc.createTextNode(QString("%1") .arg(ui->sellBrandComboBox->currentText()));
+    brand.appendChild(text);
+    text = doc.createTextNode(QString("%1") .arg(ui->sellPriceLineEdit->text()));
+    price.appendChild(text);
+    text = doc.createTextNode(QString("%1") .arg(ui->sellNumSpinBox->value()));
+    num.appendChild(text);
+    text = doc.createTextNode(QString("%1") .arg(ui->sellSumLineEdit->text()));
+    sum.appendChild(text);
 
-        time.appendChild(type);
-        time.appendChild(brand);
-        time.appendChild(price);
-        time.appendChild(num);
-        time.appendChild(sum);
+    time.appendChild(type);
+    time.appendChild(brand);
+    time.appendChild(price);
+    time.appendChild(num);
+    time.appendChild(sum);
 }
 
-
-// 显示日销售清单
+/* 显示日销售清单*/
 void Widget::showDailyList()
 {
     ui->dailyList->clear();
@@ -313,11 +307,10 @@ void Widget::showDailyList()
     }
 }
 
-
-/*    创建 销售统计 图表的模型和视图 */
+/*  创建 销售统计 图表的模型和视图 */
 void Widget::createChartModelView()
 {
-        chartModel = new QStandardItemModel(this);   // 树形结构Model
+        chartModel = new QStandardItemModel(this);      // 树形结构Model
         chartModel->setColumnCount(2);
         chartModel->setHeaderData(0, Qt::Horizontal, QString("品牌"));
         chartModel->setHeaderData(1, Qt::Horizontal, QString("销售数量"));
@@ -358,12 +351,10 @@ void Widget::showChart()
 
                 chartModel->insertRows(row, 1, QModelIndex());
 
-                chartModel->setData(chartModel->index(row, 0, QModelIndex()),
-                                                      query.value(0).toString());
-                chartModel->setData(chartModel->index(row, 1, QModelIndex()),
-                                                       query.value(1).toInt());
-                chartModel->setData(chartModel->index(row, 0, QModelIndex()),
-                                                       QColor(r, g, b), Qt::DecorationRole);
+                chartModel->setData(chartModel->index(row, 0, QModelIndex()), query.value(0).toString());
+                chartModel->setData(chartModel->index(row, 1, QModelIndex()), query.value(1).toInt());
+                 /* 颜色 */
+                chartModel->setData(chartModel->index(row, 0, QModelIndex()), QColor(r, g, b), Qt::DecorationRole);
                 row++;
         }
 }
@@ -382,13 +373,13 @@ void Widget::on_updateBtn_clicked()
                     showChart();
 }
 
-// 商品管理按钮
+/* 商品管理按钮*/
 void Widget::on_manageBtn_clicked()
 {
         ui->stackedWidget->setCurrentIndex(0);
 }
 
-// 销售统计按钮
+/* 销售统计按钮*/
 void Widget::on_chartBtn_clicked()
 {
         ui->stackedWidget->setCurrentIndex(1);
