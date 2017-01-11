@@ -9,7 +9,7 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
-    setMouseTracking(true);
+    setMouseTracking(true);  // 保证不用按下鼠标按键，也能触发鼠标移动事件
 }
 
 Widget::~Widget()
@@ -19,14 +19,14 @@ Widget::~Widget()
 
 void Widget::paintEvent(QPaintEvent *event)
 {
-//    QPainter painter(this);
-//    painter.setWindow(-50,-50,100,100);
-//    painter.setBrush(Qt::green);
-//    painter.drawRect(0,0,20,20);
+//        QPainter painter(this);
+//        painter.setWindow(-50,-50,100,100);
+//        painter.setBrush(Qt::green);
+//        painter.drawRect(0,0,20,20);
 
     QPainter painter(this);
     int side = qMin(width(), height());
-//    int side = qMax(width(), height());
+//       int side = qMax(width(), height());
     int x = (width() / 2);
     int y = (height() / 2);
     //设置视口
